@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "staging": "parcel build --public-url putt-putt"
+    "staging": "parcel build --public-url /toys/putt-putt"
   },
   "repository": {
     "type": "git",
