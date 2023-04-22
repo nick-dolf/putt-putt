@@ -8,7 +8,8 @@ A mini golf game using the  HTML canvas element and JS/CSS.
 Parcel is used as the build system
 
 - `npm i` to install dependencies
-- `npm build` to run parcel and build site
+- `npm start` to parcel development server
+- `npm run build` to run parcel and build site 
 
 # Technologies Used
 
