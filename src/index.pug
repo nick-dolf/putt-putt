@@ -10,8 +10,11 @@ html(lang="en")
 
 body
 
-  h1 Putt Putt
+  main
+    header
+      h1 Putt Putt
+      span#count 0
 
-  canvas#canvas(width="300" height="300" style="background: green")
-  button#putt Putt
+    canvas#canvas(width=300 height=300)
+    button#putt Putt
   script(src="script.js")

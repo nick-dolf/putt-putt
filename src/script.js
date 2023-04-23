@@ -1,4 +1,5 @@
 const putt = document.getElementById("putt");
+const count = document.getElementById("count");
 const canvas = document.getElementById("canvas");
 const course = canvas.getContext("2d");
 
@@ -46,11 +47,12 @@ class Ball {
   }
 }
 
-let ball = new Ball(20, 20);
+let ball = new Ball(30, 40);
 let dirX = 0;
 let dirY = 0;
 let puttPower = 0;
 let frameCount = 0;
+let puttCount = 0;
 
 init();
 function init() {
@@ -59,18 +61,21 @@ function init() {
 }
 
 function draw() {
-  course.clearRect(0, 0, canvas.width, canvas.height);
+  if (playing()) {
+    course.clearRect(0, 0, canvas.width, canvas.height);
 
-  ball.tick();
-  drawBall();
-  drawDirection();
+    ball.tick();
+    drawHole();
+    drawBall();
+    drawDirection();
 
-  frameCount += 1;
-  dirX = Math.cos(frameCount / 100);
-  dirY = Math.sin(frameCount / 100);
-  puttPower = Math.abs(Math.sin(frameCount / 200));
+    frameCount += 1;
+    dirX = Math.cos(frameCount / 30);
+    dirY = Math.sin(frameCount / 30);
+    puttPower = Math.abs(Math.sin(frameCount / 100));
 
-  window.requestAnimationFrame(draw);
+    window.requestAnimationFrame(draw);
+  }
 }
 
 function drawDirection() {
@@ -89,7 +94,9 @@ function drawDirection() {
     ((50 + dirX * puttPower * 5) / 100) * canvas.width,
     ((90 + dirY * puttPower * 5) / 100) * canvas.height
   );
-
+  course.strokeStyle = `rgb(50,50,250, 0.6)`;
+  course.lineWidth = 3;
+  course.lineCap = "round";
   course.stroke();
 }
 
@@ -98,7 +105,7 @@ function drawBall() {
   course.arc(
     (ball.x / 100) * canvas.width,
     (ball.y / 100) * canvas.height,
-    20,
+    (5 / 100) * canvas.height,
     0,
     2 * Math.PI
   );
@@ -106,7 +113,34 @@ function drawBall() {
   course.fill();
 }
 
+function drawHole() {
+  course.beginPath();
+  course.arc(
+    (70 / 100) * canvas.width,
+    (40 / 100) * canvas.height,
+    (5 / 100) * canvas.height,
+    0,
+    2 * Math.PI
+  );
+  course.fillStyle = "white";
+  course.fill();
+}
+
+function playing() {
+  const distX = Math.abs(70 - ball.x)
+  const distY = Math.abs(40 - ball.y)
+
+  if (distX < 5 && distY < 5) {
+    alert(`Congratulations! ${puttCount} putts!`)
+    putt.disabled = true
+    return false
+  }
+
+  return true
+}
+
 putt.addEventListener("click", () => {
-  console.log(dirX);
+  puttCount += 1;
+  count.textContent = puttCount;
   ball.impulse(dirX * puttPower * 100, dirY * puttPower * 100);
 });
