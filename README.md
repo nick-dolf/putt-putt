@@ -1,7 +1,7 @@
 # putt-putt
 A mini golf game using the  HTML canvas element and JS/CSS. 
 
-[Live demo](https://nickdolf.com/putt-putt)
+[Live demo](https://nickdolf.com/toys/putt-putt)
 
 # Setup
 
